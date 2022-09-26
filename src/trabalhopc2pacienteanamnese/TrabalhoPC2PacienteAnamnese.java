@@ -18,12 +18,15 @@ public class TrabalhoPC2PacienteAnamnese {
 
             System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*="
                     + "CADASTRO DE PACIENTE*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
-            System.out.println("Digite 0 para sair: ");
-            System.out.println("Digite 1 para cadastrar um paciente: ");
-            System.out.println("Digite 2 para alterar um paciente: ");
-            System.out.println("Digite 3 para excluir um paciente: ");
-            System.out.println("Digite 4 para buscar um pacientes: ");
-            System.out.println("Digite 5 para listar os pacientes: ");
+            System.out.println("Digite 0 para sair");
+            System.out.println("Digite 1 para cadastrar um paciente");
+            System.out.println("Digite 2 para alterar um paciente");
+            System.out.println("Digite 3 para excluir um paciente");
+            System.out.println("Digite 4 para buscar um pacientes");
+            System.out.println("Digite 5 para listar os pacientes");
+            System.out.println("Digite aqui: ");
+            System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*="
+                    + "*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*");
 
             select = sc.nextInt();
             sc.nextLine();
@@ -46,12 +49,12 @@ public class TrabalhoPC2PacienteAnamnese {
                     
                 case 2:
                     
-                    System.out.println("Qual o número da CNS do paciente? ");
+                    System.out.println("Qual o nome do paciente? ");
+                    String nome = sc.nextLine();
+                    System.out.println("Qual o nome da mão desse paciente?");
+                    String nomeM = sc.nextLine();
                     
-                    long numCNS = sc.nextInt();
-                    sc.nextLine();
-                    
-                    if (sistema.alterar(numCNS, sistema.paciente)) {
+                    if (sistema.alterar(nome, nomeM)) {
                         
                         System.out.println("Paciente alterado com sucesso!");
                     } else {
@@ -64,12 +67,22 @@ public class TrabalhoPC2PacienteAnamnese {
                     break;
                     
                 case 4:
+                    
+                    System.out.println("Qual o nome do paciente a ser buscado? ");
+                    String nomeB = sc.nextLine();
+                    System.out.println("Qual o ome da Mãe? ");
+                    String nomeMB = sc.nextLine();
+                    if (sistema.buscarPac(nomeB, nomeMB)) {
+                        System.out.println("O paciente existe!");
+                    } else {
+                        System.out.println("Paciente não encontrado!");
+                    }
                     break;
                     
                 case 5:
                     
                     System.out.println("");
-                    sistema.listarPac(sistema.paciente);
+                    sistema.listarPac();
                     System.out.println("");
                     break;
             }

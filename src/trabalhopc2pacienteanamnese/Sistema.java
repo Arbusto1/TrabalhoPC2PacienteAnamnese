@@ -1,93 +1,14 @@
 package trabalhopc2pacienteanamnese;
 
 import java.util.Scanner;
+import static trabalhopc2pacienteanamnese.TrabalhoPC2PacienteAnamnese.sc;
 
 public class Sistema {
 
     Paciente[] paciente = new Paciente[10];
     Anamnese[] anamnese = new Anamnese[10];
 
-    Paciente registrarPac() {
-
-        Scanner sc = new Scanner(System.in);
-        Paciente p = new Paciente();
-        Endereco ep = new Endereco();
-
-        for (;;) {
-
-            try {
-
-                System.out.println("");
-                System.out.println("Qual o nome do Paciente? ");
-                p.nome = sc.nextLine();
-                System.out.println("Qual o número de sua CNS? ");
-                p.numCNS = sc.nextInt();
-                sc.nextLine();
-                System.out.println("Qual o nome damãe? ");
-                p.nomeMae = sc.nextLine();
-
-                System.out.println("Qual o sexo do paciente? (Digite 1 para MASCULINO 2 para"
-                        + " FEMININO e 3 para INTERSEXO)");
-                for (;;) {
-
-                    int s = sc.nextInt();
-                    sc.nextLine();
-                    if (s == 1) {
-
-                        p.sexo = Sexo.MASCULINO;
-                        break;
-                    } else if (s == 2) {
-
-                        p.sexo = Sexo.FEMININO;
-                        break;
-                    } else if (s == 3) {
-
-                        p.sexo = Sexo.INTERSEXO;
-                        break;
-                    } else {
-                        System.out.println("Insira um número válido!");
-                    }
-                }
-
-                System.out.println("Qual a cidade onde mora? ");
-                ep.cidade = sc.nextLine();
-                System.out.println("Qual o bairo? ");
-                ep.bairro = sc.nextLine();
-                System.out.println("Qual a rua? ");
-                ep.rua = sc.nextLine();
-                System.out.println("Qual o número da residência?");
-                ep.numero = sc.nextInt();
-                p.endereco = ep;
-                break;
-            } catch (Exception e) {
-
-                System.out.println("");
-                System.out.println("Algum valor não está compatível, por favor"
-                        + " tente novamente com os dados corretos");
-                System.out.println("");
-            }
-        }
-        sc.close();
-        return p;
-    }
-
-    boolean verificaExiPac(Paciente p) {
-        if (p != null) {
-
-            for (int i = 0; i < paciente.length; i++) {
-
-                if (paciente[i] != null) {
-                    if (p.nome.equals(paciente[i].nome) && p.nomeMae.equals(paciente[i].nomeMae)) {
-
-                        return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    boolean adicionar(Paciente p) {
+    boolean adicionarPaciente(Paciente p) {
 
         if (p != null && this.verificaExiPac(p)) {
 
@@ -107,6 +28,24 @@ public class Sistema {
         }
     }
 
+    boolean verificaExiPac(Paciente p) {
+        if (p != null) {
+
+            for (int i = 0; i < paciente.length; i++) {
+
+                if (p.getNome() != null) {
+                    if (paciente[i] != null) {
+                        if (p.getNome().equals(paciente[i].getNome()) && p.getNomeMae().equals(paciente[i].getNomeMae())) {
+
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     void aumentarPac(Paciente p) {
 
         Paciente[] aux = new Paciente[paciente.length * 2];
@@ -120,43 +59,39 @@ public class Sistema {
         paciente[i] = p;
     }
 
-    boolean alterar(String nome, String nomeM) {
+    boolean alterar(String nome, String nomeM, Paciente p) {
 
         for (int i = 0; i < paciente.length; i++) {
 
-            if (paciente[i] != null && nome.equals(paciente[i].nome)
-                    && nomeM.equals(paciente[i].nomeMae)) {
+            if (paciente[i] != null && nome.equals(paciente[i].getNome())
+                    && nomeM.equals(paciente[i].getNomeMae())) {
 
-                paciente[i] = registrarPac();
+                paciente[i] = p;
                 return true;
             }
         }
         return false;
     }
 
-    boolean buscarPac(String nome, String nomeM) {
+    boolean excluirPac(String nome, String nomeM) {
 
         for (int i = 0; i < paciente.length; i++) {
 
             if (paciente[i] != null) {
-                if (nome.equals(paciente[i].nome) && nomeM.equals(paciente[i].nomeMae)) {
+                if (nome.equals(paciente[i].getNome()) && nomeM.equals(paciente[i].getNomeMae())) {
 
-                    /*System.out.println("Dados do paciente");
-                    System.out.println("");
-                    System.out.println("Nome: " + paciente[i].nome);
-                    System.out.println("Nome da Mãe: " + paciente[i].nomeMae);
-                    System.out.println("Número CNS: " + paciente[i].numCNS);
-                    System.out.println("Sexo: " + paciente[i].sexo);
-                    System.out.println("Cidade: " + paciente[i].endereco.cidade);
-                    System.out.println("Bairo: " + paciente[i].endereco.bairro);
-                    System.out.println("Rua: " + paciente[i].endereco.rua);
-                    System.out.println("Número da redidência: " + paciente[i].endereco.numero);
-                    System.out.println("");*/
+                    for (int j = 0; j < paciente[i].vetAnamnese.length; j++) {
+
+                        if (paciente[i].vetAnamnese[j] != null) {
+
+                            return false;
+                        }
+                    }
+                    paciente[i] = null;
                     return true;
                 }
             }
         }
-        System.out.println("Paciente não encontrado");
         return false;
     }
 
@@ -164,93 +99,93 @@ public class Sistema {
 
         if (paciente != null) {
 
-            System.out.printf("%-15s %-14s %-15s %-15s %-15s %-4s %-10s %-10s %n",
-                     "Nome", "Nome da mãe", "Cidade", "Bairro", "Rua", "Número ",
-                     "Número CNS ", "Sexo");
+            System.out.print("Nome           Nome da Mãe    Cidade         Bairro         Rua            Número  Número CNS  Sexo");
             System.out.println("");
-            for (int i = 0; i < paciente.length; i++) {
+            if (paciente != null) {
+                for (int i = 0; i < paciente.length; i++) {
 
-                if (paciente[i] != null) {
+                    if (paciente[i] != null) {
 
-                    char[] nome = new char[16];
-                    char[] nomeM = new char[16];
-                    char[] cidade = new char[16];
-                    char[] bairro = new char[16];
-                    char[] rua = new char[16];
+                        char[] nome = new char[16];
+                        char[] nomeM = new char[16];
+                        char[] cidade = new char[16];
+                        char[] bairro = new char[16];
+                        char[] rua = new char[16];
 
-                    for (int j = 0; j < nome.length - 1; j++) {
+                        for (int j = 0; j < nome.length - 1; j++) {
+                            if (paciente[i].getNome() != null && paciente[i].getNomeMae() != null) {
+                                if (j < paciente[i].getNome().length()) {
+                                    nome[j] = paciente[i].getNome().charAt(j);
+                                } else {
+                                    nome[j] = ' ';
+                                }
 
-                        if (j < paciente[i].nome.length()) {
-                            nome[j] = paciente[i].nome.charAt(j);
-                        } else {
-                            nome[j] = ' ';
+                                if (j < paciente[i].getNomeMae().length()) {
+                                    nomeM[j] = paciente[i].getNomeMae().charAt(j);
+                                } else {
+                                    nomeM[j] = ' ';
+                                }
+                            }
                         }
 
-                        if (j < paciente[i].nomeMae.length()) {
-                            nomeM[j] = paciente[i].nomeMae.charAt(j);
-                        } else {
-                            nomeM[j] = ' ';
+                        for (int j = 0; j < cidade.length - 1; j++) {
+                            if (paciente[i].getEndereco() != null) {
+                                if (paciente[i].getEndereco().getBairro() != null) {
+                                    if (j < paciente[i].getEndereco().getBairro().length()) {
+                                        bairro[j] = paciente[i].getEndereco().getBairro().charAt(j);
+                                    } else {
+                                        bairro[j] = ' ';
+                                    }
+                                }
+                                if (paciente[i].getEndereco().getCidade() != null) {
+                                    if (j < paciente[i].getEndereco().getCidade().length()) {
+                                        cidade[j] = paciente[i].getEndereco().getCidade().charAt(j);
+                                    } else {
+                                        cidade[j] = ' ';
+                                    }
+                                }
+                                if (paciente[i].getEndereco().getRua() != null) {
+                                    if (j < paciente[i].getEndereco().getRua().length()) {
+                                        rua[j] = paciente[i].getEndereco().getRua().charAt(j);
+                                    } else {
+                                        rua[j] = ' ';
+                                    }
+                                }
+                            }
+
+                        }
+
+                        for (int j = 0; j < nome.length; j++) {
+                            System.out.print(nome[j]);
+                        }
+
+                        for (int j = 0; j < nomeM.length; j++) {
+                            System.out.print(nomeM[j]);
+                        }
+
+                        for (int j = 0; j < cidade.length; j++) {
+                            System.out.print(cidade[j]);
+
+                        }
+
+                        for (int j = 0; j < bairro.length; j++) {
+                            System.out.print(bairro[j]);
+                        }
+
+                        for (int j = 0; j < rua.length; j++) {
+                            System.out.print(rua[j]);
+                        }
+                        if (paciente[i].getEndereco() != null) {
+                            System.out.printf("%04d", paciente[i].getEndereco().getNumero());
+                            System.out.print("    ");
+                            System.out.printf("%010d", paciente[i].getNumCNS());
+                            System.out.print("  ");
+                            System.out.print(paciente[i].getSexo());
+                            System.out.print("     ");
+
+                            System.out.println("");
                         }
                     }
-
-                    for (int j = 0; j < cidade.length - 1; j++) {
-
-                        if (j < paciente[i].endereco.bairro.length()) {
-                            bairro[j] = paciente[i].endereco.bairro.charAt(j);
-                        } else {
-                            bairro[j] = ' ';
-                        }
-
-                        if (j < paciente[i].endereco.cidade.length()) {
-                            cidade[j] = paciente[i].endereco.cidade.charAt(j);
-                        } else {
-                            cidade[j] = ' ';
-                        }
-
-                        if (j < paciente[i].endereco.rua.length()) {
-                            rua[j] = paciente[i].endereco.rua.charAt(j);
-                        } else {
-                            rua[j] = ' ';
-                        }
-                    }
-
-                    for (int j = 0; j < nome.length; j++) {
-                        System.out.print(nome[j]);
-                    }
-                    
-                    for (int j = 0; j < nomeM.length; j++) {
-                        System.out.print(nomeM[j]);
-                    }
-
-                    for (int j = 0; j < cidade.length; j++) {
-                        System.out.print(cidade[j]);
-                        
-                    }
-                    
-                    for (int j = 0; j < bairro.length; j++) {
-                        System.out.print(bairro[j]);
-                    }
-                    
-                    for (int j = 0; j < rua.length; j++) {
-                        System.out.print(rua[j]);
-                    }
-                    
-                    System.out.printf("%04d", paciente[i].endereco.numero);
-                    System.out.print("    ");
-                    System.out.printf("%010d", paciente[i].numCNS);
-                    System.out.print("  ");
-                    System.out.print(paciente[i].sexo);
-                    
-                    System.out.println("");
-                    /*System.out.println(paciente[i].nome + "\t"
-                            + paciente[i].numCNS + "\t"
-                            + paciente[i].nomeMae + "\t" + paciente[i].sexo
-                            + "\t"
-                            + paciente[i].endereco.cidade + "\t"
-                            + paciente[i].endereco.bairro
-                            + "\t" + paciente[i].endereco.rua + "\t"
-                            + paciente[i].endereco.numero
-                            + "\t");*/
                 }
             }
             return true;
@@ -258,75 +193,164 @@ public class Sistema {
         return false;
     }
 
-    void excluir() {
+    Paciente buscarCNS(long numCNS) {
+        for (int i = 0; i < this.paciente.length; i++) {
+            if (this.paciente[i] != null && numCNS == this.paciente[i].getNumCNS()) {
+                return this.paciente[i];
+            }
+        }
+        return null;
+    }
 
+    boolean AdicionarAnamnese(Anamnese a) {
+        if (a != null) {
+            for (int i = 0; i < anamnese.length; i++) {
+                if (anamnese[i] == null) {
+                    anamnese[i] = a;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    void listarAnam(Paciente p) {
+        System.out.println("DIAGNÓSTICO: \t \t" + "MOTIVO: \t \t" + "RELATO: ");
+        for (int i = 0; i < anamnese.length; i++) {
+            if (anamnese[i] != null) {
+                System.out.println(i + 1 + " " + anamnese[i].getDiagnostico() + " \t \t" + anamnese[i].getMotivo() + " \t \t" + anamnese[i].getRelato() + " ");
+            }
+        }
+
+    }
+
+    boolean listarTodasAnam() {
+
+        if (anamnese != null) {
+
+            System.out.printf("%-7s %-11s %-11s %-11s %-11s %n",
+                    "ID", "NOME", "MOTIVO", "RELATO", "DIAGNÓSTICO");
+            for (int i = 0; i < anamnese.length; i++) {
+                if (anamnese[i] != null) {
+                    //System.out.println(i + 1 + " " + anamnese[i].paciente.nome + anamnese[i].diagnostico + " \t \t" + anamnese[i].motivo + " \t \t" + anamnese[i].relato + " ");
+                    char[] nome = new char[13];
+                    char[] diagnostico = new char[13];
+                    char[] motivo = new char[13];
+                    char[] relato = new char[13];
+
+                    for (int j = 0; j < nome.length - 1; j++) {
+
+                        if (j < anamnese[i].getPaciente().getNome().length()) {
+                            nome[j] = anamnese[i].getPaciente().getNome().charAt(j);
+                        } else {
+                            nome[j] = ' ';
+                        }
+                        if (j < anamnese[i].getDiagnostico().length()) {
+                            diagnostico[j] = anamnese[i].getDiagnostico().charAt(j);
+                        } else {
+                            diagnostico[j] = ' ';
+                        }
+                        if (j < anamnese[i].getMotivo().length()) {
+                            motivo[j] = anamnese[i].getMotivo().charAt(j);
+                        } else {
+                            motivo[j] = ' ';
+                        }
+                        if (j < anamnese[i].getRelato().length()) {
+                            relato[j] = anamnese[i].getRelato().charAt(j);
+                        } else {
+                            relato[j] = ' ';
+                        }
+
+                    }
+                    System.out.printf("%04d", i);
+                    System.out.print("    ");
+                    for (int j = 0; j < nome.length; j++) {
+
+                        System.out.print(nome[j]);
+                    }
+                    for (int j = 0; j < motivo.length; j++) {
+                        System.out.print(motivo[j]);
+                    }
+                    for (int j = 0; j < relato.length; j++) {
+                        System.out.print(relato[j]);
+                    }
+                    for (int j = 0; j < diagnostico.length; j++) {
+                        System.out.print(diagnostico[j]);
+                    }
+                    System.out.println("");
+
+                }
+            }
+            return true;
+        }
+        return false;
+
+    }
+
+    boolean AdicionarAnam(Paciente p, Anamnese a) {
+        if (p != null) {
+            for (int i = 0; i < p.vetAnamnese.length; i++) {
+                if (p.vetAnamnese[i] == null) {
+                    p.vetAnamnese[i] = a;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    Anamnese[] buscarNomeAnam(String nome) {
+        Anamnese[] nomes = new Anamnese[10];
+        if (paciente != null) {
+            for (int i = 0; i < paciente.length; i++) {
+                if (anamnese[i] != null) {
+                    if (paciente[i] != null && nome.equals(paciente[i].getNome())) {
+                        if (nome.equals(anamnese[i].getPaciente().getNome())) {
+                            nomes[i] = anamnese[i];
+                        }
+                    }
+                }
+            }
+            return nomes;
+        }
+        return null;
+    }
+
+    int identificarID(int escolha, Anamnese[] nomess) {
+        for (int i = 0; i < nomess.length; i++) {
+            if (escolha == i) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     void init() {
 
-        Paciente p1 = new Paciente();
-        Endereco ep1 = new Endereco();
-        p1.numCNS = 164584;
-        p1.nome = "Jão";
-        p1.nomeMae = "Renata";
-        p1.sexo = Sexo.MASCULINO;
-        ep1.bairro = "Melo Viana";
-        ep1.cidade = "Coronel Fabriciano";
-        ep1.rua = "Jasmin";
-        ep1.numero = 58;
-        p1.endereco = ep1;
-        this.adicionar(p1);
+        Endereco ep1 = new Endereco("Melo Viana", "Jasmin", "Coronel Fabriciano", 58);
+        Paciente p1 = new Paciente("João", "Renata", Sexo.MASCULINO, ep1);
+        Anamnese a1 = new Anamnese("Tosse", "Estava tossindo durante a noite", "Gripe", p1);
+        Anamnese a2 = new Anamnese("Inchaço nos lábios", "Os lábios incharam após comer um alimento", "Alergia", p1);
+        AdicionarAnam(p1, a1);
+        AdicionarAnam(p1, a1);
+        AdicionarAnamnese(a1);
+        AdicionarAnamnese(a2);
+        this.adicionarPaciente(p1);
 
-        Paciente p2 = new Paciente();
-        Endereco ep2 = new Endereco();
-        p2.numCNS = 1678454;
-        p2.nome = "Emershow";
-        p2.nomeMae = "Barbara";
-        p2.sexo = Sexo.MASCULINO;
-        ep2.bairro = "Giovanini";
-        ep2.cidade = "Coronel Fabriciano";
-        ep2.rua = "Paquetá";
-        ep2.numero = 69;
-        p2.endereco = ep2;
-        this.adicionar(p2);
+        Endereco ep2 = new Endereco("Giovanini", "Paquetá", "Coronel Fabriciano", 69);
+        Paciente p2 = new Paciente("Emerson", "Barbara", Sexo.MASCULINO, ep2);
+        Anamnese a4 = new Anamnese("Vomito", "Vomitou por dois dias", "Virose", p2);
+        AdicionarAnamnese(a4);
+        this.adicionarPaciente(p2);
 
-        Paciente p3 = new Paciente();
-        Endereco ep3 = new Endereco();
-        p3.numCNS = 1278479;
-        p3.nome = "Jet";
-        p3.nomeMae = "Helena";
-        p3.sexo = Sexo.MASCULINO;
-        ep3.bairro = "Canaã";
-        ep3.cidade = "Ipatinga";
-        ep3.rua = "Isaías";
-        ep3.numero = 777;
-        p3.endereco = ep3;
-        this.adicionar(p3);
+        Endereco ep3 = new Endereco("Canaã", "Isaías", "Ipatinga", 777);
+        Paciente p3 = new Paciente("João", "Helena", Sexo.MASCULINO, ep3);
 
-        Paciente p4 = new Paciente();
-        Endereco ep4 = new Endereco();
-        p4.numCNS = 2972004;
-        p4.nome = "Augusto";
-        p4.nomeMae = "Diana";
-        p4.sexo = Sexo.MASCULINO;
-        ep4.bairro = "Primavera";
-        ep4.cidade = "Timóteo";
-        ep4.rua = "Carmélia";
-        ep4.numero = 66;
-        p4.endereco = ep4;
-        this.adicionar(p4);
+        Endereco ep4 = new Endereco("Primavera", "Carmélia", "Timóteo", 66);
+        Paciente p4 = new Paciente("Augusto", "Diana", Sexo.MASCULINO, ep4);
 
-        Paciente p5 = new Paciente();
-        Endereco ep5 = new Endereco();
-        p5.numCNS = 2972004;
-        p5.nome = "Clara";
-        p5.nomeMae = "Ana";
-        p5.sexo = Sexo.FEMININO;
-        ep5.bairro = "Iguaçu";
-        ep5.cidade = "Ipatinga";
-        ep5.rua = "Ametista";
-        ep5.numero = 13;
-        p5.endereco = ep5;
-        this.adicionar(p5);
+        Endereco ep5 = new Endereco("Iguaçu", "Ametista", "Ipatinga", 13);
+        Paciente p5 = new Paciente("Clara", "Ana", Sexo.FEMININO, ep5);
+
     }
 }

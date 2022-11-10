@@ -2,8 +2,59 @@ package trabalhopc2pacienteanamnese;
 
 public class Paciente {
 
-    long numCNS;
-    String nome, nomeMae;
-    Sexo sexo;
-    Endereco endereco;
+    private long numCNS;
+    private String nome, nomeMae;
+    private Sexo sexo;
+    private Endereco endereco;
+    Anamnese anamnese;
+    Anamnese[] vetAnamnese = new Anamnese[10];
+    private static long idPac;
+    
+    Paciente() {
+        this.numCNS = idPac++;
+    }
+    
+    Paciente(String nome, String nomeMae, Sexo sexo, Endereco endereco) {
+        this.numCNS = idPac++;
+        this.nome = nome;
+        this.nomeMae = nomeMae;
+        this.sexo = sexo;
+        this.endereco = endereco;
+    }
+
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+    
+    public Endereco getEndereco() {
+        return endereco;
+    }
+    
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getNomeMae() {
+        return nomeMae;
+    }
+
+    public void setNomeMae(String nomeMae) {
+        this.nomeMae = nomeMae;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
+    }
+    
+    public long getNumCNS() {
+        return numCNS;
+    }
 }

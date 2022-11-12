@@ -58,7 +58,10 @@ public class TrabalhoPC2PacienteAnamnese {
                                         + "CADASTRO DE PACIENTE*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
 
                                 Paciente p = new Paciente();
-                                Endereco ep = new Endereco();
+                                String cidade,
+                                 bairro,
+                                 rua;
+                                int numRes;
 
                                 for (;;) {
 
@@ -94,16 +97,16 @@ public class TrabalhoPC2PacienteAnamnese {
                                         }
 
                                         System.out.println("Qual a cidade onde mora? ");
-                                        ep.setCidade(sc.nextLine());
+                                        cidade = sc.nextLine();
                                         System.out.println("Qual o bairo? ");
-                                        ep.setBairro(sc.nextLine());
+                                        bairro = sc.nextLine();
                                         System.out.println("Qual a rua? ");
-                                        ep.setRua(sc.nextLine());
+                                        rua = sc.nextLine();
                                         System.out.println("Qual o número da residência?");
-                                        ep.setNumero(sc.nextInt());
+                                        numRes = sc.nextInt();
                                         sc.nextLine();
                                         break;
-                                        
+
                                     } catch (Exception e) {
 
                                         System.out.println("");
@@ -112,7 +115,7 @@ public class TrabalhoPC2PacienteAnamnese {
                                         System.out.println("");
                                     }
                                 }
-                                p.setEndereco(ep);
+                                p.addEndereco(cidade, bairro, rua, numRes);
 
                                 if (sistema.adicionarPaciente(p)) {
 
@@ -124,7 +127,7 @@ public class TrabalhoPC2PacienteAnamnese {
                                 break;
 
                             case 2:
-                                
+
                                 System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*="
                                         + "ALTERAR PACIENTE*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
 
@@ -133,72 +136,76 @@ public class TrabalhoPC2PacienteAnamnese {
                                 System.out.println("Qual o nome da mãe desse paciente?");
                                 String nomeM = sc.nextLine();
 
-                                Paciente p1 = new Paciente();
-                                Endereco ep1 = new Endereco();
+                                if (sistema.auxAlterarPac(nomeM, nomeM)) {
+                                    Paciente p1 = new Paciente();
+                                    String cidad, bairo, ru;
+                                    int numR;
 
-                                for (;;) {
+                                    for (;;) {
 
-                                    try {
+                                        try {
 
-                                        System.out.println("");
-                                        System.out.println("Qual o nome do Paciente? ");
-                                        p1.setNome(sc.nextLine());
-                                        System.out.println("Qual o nome damãe? ");
-                                        p1.setNomeMae(sc.nextLine());
+                                            System.out.println("");
+                                            System.out.println("Qual o nome do Paciente? ");
+                                            p1.setNome(sc.nextLine());
+                                            System.out.println("Qual o nome damãe? ");
+                                            p1.setNomeMae(sc.nextLine());
 
-                                        System.out.println("Qual o sexo do paciente? (Digite 1 para MASCULINO 2 para"
-                                                + " FEMININO e 3 para INTERSEXO)");
-                                        for (;;) {
+                                            System.out.println("Qual o sexo do paciente? (Digite 1 para MASCULINO 2 para"
+                                                    + " FEMININO e 3 para INTERSEXO)");
+                                            for (;;) {
 
-                                            int s = sc.nextInt();
-                                            sc.nextLine();
-                                            if (s == 1) {
+                                                int s = sc.nextInt();
+                                                sc.nextLine();
+                                                if (s == 1) {
 
-                                                p1.setSexo(Sexo.MASCULINO);
-                                                break;
-                                            } else if (s == 2) {
+                                                    p1.setSexo(Sexo.MASCULINO);
+                                                    break;
+                                                } else if (s == 2) {
 
-                                                p1.setSexo(Sexo.FEMININO);
-                                                break;
-                                            } else if (s == 3) {
+                                                    p1.setSexo(Sexo.FEMININO);
+                                                    break;
+                                                } else if (s == 3) {
 
-                                                p1.setSexo(Sexo.INTERSEXO);
-                                                break;
-                                            } else {
-                                                System.out.println("Insira um número válido!");
+                                                    p1.setSexo(Sexo.INTERSEXO);
+                                                    break;
+                                                } else {
+                                                    System.out.println("Insira um número válido!");
+                                                }
                                             }
+
+                                            System.out.println("Qual a cidade onde mora? ");
+                                            cidad = sc.nextLine();
+                                            System.out.println("Qual o bairo? ");
+                                            bairo = sc.nextLine();
+                                            System.out.println("Qual a rua? ");
+                                            ru = sc.nextLine();
+                                            System.out.println("Qual o número da residência?");
+                                            numR = sc.nextInt();
+                                            sc.nextLine();
+                                            break;
+                                        } catch (Exception e) {
+
+                                            System.out.println("");
+                                            System.out.println("Algum valor não está compatível, por favor"
+                                                    + " tente novamente com os dados corretos");
+                                            System.out.println("");
                                         }
-
-                                        System.out.println("Qual a cidade onde mora? ");
-                                        ep1.setCidade(sc.nextLine());
-                                        System.out.println("Qual o bairo? ");
-                                        ep1.setBairro(sc.nextLine());
-                                        System.out.println("Qual a rua? ");
-                                        ep1.setRua(sc.nextLine());
-                                        System.out.println("Qual o número da residência?");
-                                        ep1.setNumero(sc.nextInt());
-                                        sc.nextLine();
-                                        break;
-                                    } catch (Exception e) {
-
-                                        System.out.println("");
-                                        System.out.println("Algum valor não está compatível, por favor"
-                                                + " tente novamente com os dados corretos");
-                                        System.out.println("");
                                     }
-                                }
-                                p1.setEndereco(ep1);
+                                    p1.addEndereco(cidad, bairo, ru, numR);
 
-                                if (sistema.alterarPac(nomeP, nomeM, p1)) {
-                                    System.out.println("Paciente alterado com sucesso!");
-                                }
-                                else {
+                                    if (sistema.alterarPac(nomeP, nomeM, p1)) {
+                                        System.out.println("Paciente alterado com sucesso!");
+                                    } else {
+                                        System.out.println("!!!! Não foi possível alterar o paciente !!!!");
+                                    }
+                                } else {
                                     System.out.println("!!!! Não foi possível alterar o paciente !!!!");
                                 }
                                 break;
 
                             case 3:
-                                
+
                                 System.out.println("Qual o nome do paciente a ser excluido? ");
                                 String nomee = sc.nextLine();
                                 System.out.println("Qual o nome da mãe do paciente? ");

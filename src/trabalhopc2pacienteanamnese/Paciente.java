@@ -31,6 +31,11 @@ public class Paciente {
             return null;
         }
     }
+    
+    public void addEndereco(String cidade, String bairro, String rua, int numRes) {
+        Endereco e = Endereco.getInstance(bairro, rua, cidade, numRes);
+        this.endereco = e;
+    }
 
     public Anamnese[] getVetAnamnese() {
         return vetAnamnese;

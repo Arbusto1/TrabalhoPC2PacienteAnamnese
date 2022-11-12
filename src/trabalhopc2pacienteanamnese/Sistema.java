@@ -69,6 +69,18 @@ public class Sistema {
         }
         return false;
     }
+    
+    boolean auxAlterarPac(String nome, String nomeMae) {
+        
+        for (int i = 0; i < paciente.length; i++) {
+            
+            if (paciente[i] != null && nome.equals(paciente[i].getNome())
+                    && nomeMae.equals(paciente[i].getNomeMae())) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     boolean excluirPac(String nome, String nomeM) {
 

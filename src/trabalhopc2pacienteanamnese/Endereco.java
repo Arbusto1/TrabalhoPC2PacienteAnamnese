@@ -19,7 +19,7 @@ public class Endereco {
     public static Endereco getInstance(String bairro, String rua, String cidade,
             int numero) {
         
-        if (bairro != null && rua != null && cidade != null) {
+        if (bairro != null && rua != null && cidade != null && numero > 0) {
             return new Endereco(bairro, rua, cidade, numero);
         }
         return null;

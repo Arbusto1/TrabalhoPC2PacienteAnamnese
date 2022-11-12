@@ -136,7 +136,7 @@ public class TrabalhoPC2PacienteAnamnese {
                                 System.out.println("Qual o nome da mãe desse paciente?");
                                 String nomeM = sc.nextLine();
 
-                                if (sistema.auxAlterarPac(nomeM, nomeM)) {
+                                if (sistema.auxAlterarPac(nomeP, nomeM)) {
                                     Paciente p1 = new Paciente();
                                     String cidad, bairo, ru;
                                     int numR;
@@ -200,7 +200,7 @@ public class TrabalhoPC2PacienteAnamnese {
                                         System.out.println("!!!! Não foi possível alterar o paciente !!!!");
                                     }
                                 } else {
-                                    System.out.println("!!!! Não foi possível alterar o paciente !!!!");
+                                    System.out.println("!!!! Não foi possível encontrar o paciente !!!!");
                                 }
                                 break;
 

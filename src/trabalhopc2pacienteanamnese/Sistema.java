@@ -1,8 +1,5 @@
 package trabalhopc2pacienteanamnese;
 
-import java.util.Scanner;
-import static trabalhopc2pacienteanamnese.TrabalhoPC2PacienteAnamnese.sc;
-
 public class Sistema {
 
     Paciente[] paciente = new Paciente[10];
@@ -59,7 +56,7 @@ public class Sistema {
         paciente[i] = p;
     }
 
-    boolean alterar(String nome, String nomeM, Paciente p) {
+    boolean alterarPac(String nome, String nomeM, Paciente p) {
 
         for (int i = 0; i < paciente.length; i++) {
 
@@ -80,9 +77,9 @@ public class Sistema {
             if (paciente[i] != null) {
                 if (nome.equals(paciente[i].getNome()) && nomeM.equals(paciente[i].getNomeMae())) {
 
-                    for (int j = 0; j < paciente[i].vetAnamnese.length; j++) {
+                    for (int j = 0; j < paciente[i].getVetAnamnese().length; j++) {
 
-                        if (paciente[i].vetAnamnese[j] != null) {
+                        if (paciente[i].getVetAnamnese()[j] != null) {
 
                             return false;
                         }
@@ -289,9 +286,9 @@ public class Sistema {
 
     boolean AdicionarAnam(Paciente p, Anamnese a) {
         if (p != null) {
-            for (int i = 0; i < p.vetAnamnese.length; i++) {
-                if (p.vetAnamnese[i] == null) {
-                    p.vetAnamnese[i] = a;
+            for (int i = 0; i < p.getVetAnamnese().length; i++) {
+                if (p.getVetAnamnese()[i] == null) {
+                    p.getVetAnamnese()[i] = a;
                     return true;
                 }
             }
@@ -329,15 +326,19 @@ public class Sistema {
 
         Endereco ep1 = Endereco.getInstance("Melo Viana", "Jasmin", "Coronel Fabriciano", 58);
         Paciente p1 = Paciente.getInstance("João", "Renata", Sexo.MASCULINO, ep1);
+        this.adicionarPaciente(p1);
 
         Endereco ep2 = Endereco.getInstance("Giovanini", "Paquetá", "Coronel Fabriciano", 69);
         Paciente p2 = Paciente.getInstance("Emerson", "Barbara", Sexo.MASCULINO, ep2);
         Anamnese a4 = Anamnese.getInstance("Vomito", "Vomitou por dois dias", "Virose", p2);
-        AdicionarAnamnese(a4);
+        p2.setAnamnese(a4);
+        this.AdicionarAnam(p2, a4);
+        this.AdicionarAnamnese(a4);
         this.adicionarPaciente(p2);
 
         Endereco ep4 = Endereco.getInstance("Primavera", "Carmélia", "Timóteo", 66);
         Paciente p4 = Paciente.getInstance("Augusto", "Diana", Sexo.MASCULINO, ep4);
+        this.adicionarPaciente(p4);
 
     }
 }

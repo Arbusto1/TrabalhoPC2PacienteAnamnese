@@ -189,7 +189,7 @@ public class TrabalhoPC2PacienteAnamnese {
                                 }
                                 p1.setEndereco(ep1);
 
-                                if (sistema.alterar(nomeP, nomeM, p1)) {
+                                if (sistema.alterarPac(nomeP, nomeM, p1)) {
                                     System.out.println("Paciente alterado com sucesso!");
                                 }
                                 else {

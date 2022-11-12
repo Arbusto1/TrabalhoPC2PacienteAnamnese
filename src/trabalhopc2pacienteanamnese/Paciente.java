@@ -6,8 +6,8 @@ public class Paciente {
     private String nome, nomeMae;
     private Sexo sexo;
     private Endereco endereco;
-    Anamnese anamnese;
-    Anamnese[] vetAnamnese = new Anamnese[10];
+    private Anamnese anamnese;
+    private Anamnese[] vetAnamnese = new Anamnese[10];
     private static long idPac;
     
     Paciente() {
@@ -32,6 +32,22 @@ public class Paciente {
         }
     }
 
+    public Anamnese[] getVetAnamnese() {
+        return vetAnamnese;
+    }
+    
+    public void setVetAnamnese(Anamnese[] vetAnam) {
+        this.vetAnamnese = vetAnam;
+    }
+    
+    public void setAnamnese(Anamnese anamnese) {
+        this.anamnese = anamnese;
+    }
+    
+    public Anamnese getAnamnese() {
+        return anamnese;
+    }
+    
     public void setEndereco(Endereco endereco) {
         this.endereco = endereco;
     }

@@ -67,7 +67,7 @@ public class TrabalhoPC2PacienteAnamnese {
                                         System.out.println("");
                                         System.out.println("Qual o nome do Paciente? ");
                                         p.setNome(sc.nextLine());
-                                        System.out.println("Qual o nome damãe? ");
+                                        System.out.println("Qual o nome da mãe? ");
                                         p.setNomeMae(sc.nextLine());
 
                                         System.out.println("Qual o sexo do paciente? (Digite 1 para MASCULINO 2 para"

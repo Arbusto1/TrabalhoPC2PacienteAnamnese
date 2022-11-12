@@ -11,11 +11,21 @@ public class Anamnese {
         
     }
     
-    Anamnese(String motivo, String relato, String diagnostico, Paciente paciente) {
+    private Anamnese(String motivo, String relato, String diagnostico, Paciente paciente) {
         this.id = auxId++;
         this.relato = relato;
         this.diagnostico = diagnostico;
         this.paciente = paciente;
+    }
+    
+    public static Anamnese getInstance(String motivo, String relato,
+            String diagnostico, Paciente paciente) {
+        
+        if (motivo != null && relato != null && diagnostico != null && paciente != null) {
+            return new Anamnese(motivo, relato, diagnostico, paciente);
+        } else {
+            return null;
+        }
     }
 
     public long getId() {

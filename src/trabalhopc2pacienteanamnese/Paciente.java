@@ -14,12 +14,22 @@ public class Paciente {
         this.numCNS = idPac++;
     }
     
-    Paciente(String nome, String nomeMae, Sexo sexo, Endereco endereco) {
+    private Paciente(String nome, String nomeMae, Sexo sexo, Endereco endereco) {
         this.numCNS = idPac++;
         this.nome = nome;
         this.nomeMae = nomeMae;
         this.sexo = sexo;
         this.endereco = endereco;
+    }
+    
+    public static Paciente getInstance(String nome, String nomeMae, Sexo sexo,
+            Endereco endereco) {
+        
+        if (nome.length() >= 3 && nomeMae.length() >= 3 && endereco != null) {
+            return new Paciente(nome, nomeMae, sexo, endereco);
+        } else {
+            return null;
+        }
     }
 
     public void setEndereco(Endereco endereco) {

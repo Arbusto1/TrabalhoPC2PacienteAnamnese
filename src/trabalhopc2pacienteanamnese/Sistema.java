@@ -327,30 +327,17 @@ public class Sistema {
 
     void init() {
 
-        Endereco ep1 = new Endereco("Melo Viana", "Jasmin", "Coronel Fabriciano", 58);
-        Paciente p1 = new Paciente("João", "Renata", Sexo.MASCULINO, ep1);
-        Anamnese a1 = new Anamnese("Tosse", "Estava tossindo durante a noite", "Gripe", p1);
-        Anamnese a2 = new Anamnese("Inchaço nos lábios", "Os lábios incharam após comer um alimento", "Alergia", p1);
-        AdicionarAnam(p1, a1);
-        AdicionarAnam(p1, a1);
-        AdicionarAnamnese(a1);
-        AdicionarAnamnese(a2);
-        this.adicionarPaciente(p1);
+        Endereco ep1 = Endereco.getInstance("Melo Viana", "Jasmin", "Coronel Fabriciano", 58);
+        Paciente p1 = Paciente.getInstance("João", "Renata", Sexo.MASCULINO, ep1);
 
-        Endereco ep2 = new Endereco("Giovanini", "Paquetá", "Coronel Fabriciano", 69);
-        Paciente p2 = new Paciente("Emerson", "Barbara", Sexo.MASCULINO, ep2);
-        Anamnese a4 = new Anamnese("Vomito", "Vomitou por dois dias", "Virose", p2);
+        Endereco ep2 = Endereco.getInstance("Giovanini", "Paquetá", "Coronel Fabriciano", 69);
+        Paciente p2 = Paciente.getInstance("Emerson", "Barbara", Sexo.MASCULINO, ep2);
+        Anamnese a4 = Anamnese.getInstance("Vomito", "Vomitou por dois dias", "Virose", p2);
         AdicionarAnamnese(a4);
         this.adicionarPaciente(p2);
 
-        Endereco ep3 = new Endereco("Canaã", "Isaías", "Ipatinga", 777);
-        Paciente p3 = new Paciente("João", "Helena", Sexo.MASCULINO, ep3);
-
-        Endereco ep4 = new Endereco("Primavera", "Carmélia", "Timóteo", 66);
-        Paciente p4 = new Paciente("Augusto", "Diana", Sexo.MASCULINO, ep4);
-
-        Endereco ep5 = new Endereco("Iguaçu", "Ametista", "Ipatinga", 13);
-        Paciente p5 = new Paciente("Clara", "Ana", Sexo.FEMININO, ep5);
+        Endereco ep4 = Endereco.getInstance("Primavera", "Carmélia", "Timóteo", 66);
+        Paciente p4 = Paciente.getInstance("Augusto", "Diana", Sexo.MASCULINO, ep4);
 
     }
 }

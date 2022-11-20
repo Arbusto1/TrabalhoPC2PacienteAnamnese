@@ -4,6 +4,152 @@ public class Sistema {
 
     Paciente[] paciente = new Paciente[10];
     Anamnese[] anamnese = new Anamnese[10];
+    Usuario[] usuarios = new Usuario[10];
+
+    private static Sistema instance;
+
+    public static Sistema getInstance() {
+        if (instance == null) {
+            instance = new Sistema();
+            return instance;
+        }
+        return null;
+    }
+
+    boolean listarUsuario() {
+
+        if (usuarios != null) {
+
+            System.out.print("Nome            Login           Senha           ID");
+            System.out.println("");
+            for (int i = 0; i < usuarios.length; i++) {
+
+                if (usuarios[i] != null) {
+
+                    char[] nome = new char[16];
+                    char[] login = new char[16];
+                    char[] senha = new char[16];
+
+                    for (int j = 0; j < nome.length - 1; j++) {
+                        if (usuarios[i].getLogin() != null && usuarios[i].getNomeLogin() != null && usuarios[i].getSenha() != null) {
+
+                            if (j < usuarios[i].getLogin().length()) {
+                                nome[j] = usuarios[i].getLogin().charAt(j);
+                            } else {
+                                nome[j] = ' ';
+                            }
+
+                            if (j < usuarios[i].getNomeLogin().length()) {
+                                login[j] = usuarios[i].getNomeLogin().charAt(j);
+                            } else {
+                                login[j] = ' ';
+                            }
+
+                            if (j < usuarios[i].getSenha().length()) {
+                                senha[j] = usuarios[i].getSenha().charAt(j);
+                            } else {
+                                senha[j] = ' ';
+                            }
+                        }
+                    }
+
+                    for (int j = 0; j < nome.length; j++) {
+                        System.out.print(nome[j]);
+                    }
+
+                    for (int j = 0; j < login.length; j++) {
+                        System.out.print(login[j]);
+                    }
+
+                    for (int j = 0; j < senha.length; j++) {
+                        System.out.print(senha[j]);
+                    }
+
+                    System.out.print(usuarios[i].getId());
+
+                    System.out.println("");
+                }
+            }
+            return true;
+
+        }
+        return false;
+    }
+
+    boolean verificaExiUsu(Usuario u) {
+        if (u != null) {
+
+            for (int i = 0; i < paciente.length; i++) {
+
+                if (u.getLogin() != null) {
+                    if (usuarios[i] != null) {
+                        if (u.getLogin().equals(usuarios[i].getLogin()) && u.getNomeLogin().equals(usuarios[i].getNomeLogin())) {
+
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    boolean addUsuario(Usuario u) {
+
+        if (u != null && this.verificaExiUsu(u)) {
+
+            for (int i = 0; i < usuarios.length; i++) {
+
+                if (usuarios[i] == null) {
+
+                    usuarios[i] = u;
+                    return true;
+                }
+            }
+            return true;
+        } else {
+
+            return false;
+        }
+    }
+
+    boolean alterarUsuario(String nomeLogin, String senha, String Login, Usuario u) {
+
+        for (int i = 0; i < usuarios.length; i++) {
+
+            if (usuarios[i] != null && nomeLogin.equals(usuarios[i].getNomeLogin())) {
+                usuarios[i] = u;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean auxAlterarUsuario(String nomeLogin, String senha, String Login) {
+
+        for (int i = 0; i < usuarios.length; i++) {
+
+            if (usuarios[i] != null && nomeLogin.equals(usuarios[i].getNomeLogin())
+                    && Login.equals(usuarios[i].getLogin()) && senha.equals(usuarios[i].getSenha())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    boolean excluirUsuario(String nomeLogin, String Login, String senha) {
+
+        for (int i = 0; i < usuarios.length; i++) {
+
+            if (usuarios[i] != null) {
+                if (nomeLogin.equals(usuarios[i].getNomeLogin()) && senha.equals(usuarios[i].getSenha())) {
+                    usuarios[i] = null;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     boolean adicionarPaciente(Paciente p) {
 
@@ -69,11 +215,11 @@ public class Sistema {
         }
         return false;
     }
-    
+
     boolean auxAlterarPac(String nome, String nomeMae) {
-        
+
         for (int i = 0; i < paciente.length; i++) {
-            
+
             if (paciente[i] != null && nome.equals(paciente[i].getNome())
                     && nomeMae.equals(paciente[i].getNomeMae())) {
                 return true;
@@ -108,7 +254,7 @@ public class Sistema {
 
         if (paciente != null) {
 
-            System.out.print("Nome           Nome da Mãe    Cidade         Bairro         Rua            Número  Número CNS  Sexo");
+            System.out.print("Nome            Nome da Mãe     Cidade          Bairro          Rua            Número  Número CNS   Sexo");
             System.out.println("");
             if (paciente != null) {
                 for (int i = 0; i < paciente.length; i++) {
@@ -334,6 +480,27 @@ public class Sistema {
         return -1;
     }
 
+    int VerificarSeUsuarioExiste(String nome) {
+        for (int i = 0; i < Usuario.getContador(); i++) {
+            if (usuarios[i].verificaruUsuarioPorNomeLogin(nome)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    boolean VerificarSenhaDoUsuario(String senha, int x) {
+        if (usuarios[x].verificaruSenhaDoUsuario(senha)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    Enum VerificarTipoDoUsuario(int x) {
+        return usuarios[x].getTipo();
+    }
+
     void init() {
 
         Endereco ep1 = Endereco.getInstance("Melo Viana", "Jasmin", "Coronel Fabriciano", 58);
@@ -351,6 +518,11 @@ public class Sistema {
         Endereco ep4 = Endereco.getInstance("Primavera", "Carmélia", "Timóteo", 66);
         Paciente p4 = Paciente.getInstance("Augusto", "Diana", Sexo.MASCULINO, ep4);
         this.adicionarPaciente(p4);
+
+        Usuario u1 = Usuario.getInstance("Bianca", "bianca06", "123", TipoUsuario.MEDICO);
+        this.addUsuario(u1);
+        Usuario u2 = Usuario.getInstance("Augusto", "augusto04", "123", TipoUsuario.ATENDENTE);
+        this.addUsuario(u2);
 
     }
 }

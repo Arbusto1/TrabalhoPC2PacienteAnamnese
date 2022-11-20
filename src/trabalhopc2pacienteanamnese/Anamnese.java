@@ -13,6 +13,7 @@ public class Anamnese {
     
     private Anamnese(String motivo, String relato, String diagnostico, Paciente paciente) {
         this.id = auxId++;
+        this.motivo = motivo;
         this.relato = relato;
         this.diagnostico = diagnostico;
         this.paciente = paciente;

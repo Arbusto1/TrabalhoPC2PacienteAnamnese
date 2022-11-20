@@ -1,18 +1,61 @@
 package trabalhopc2pacienteanamnese;
 
 public class Usuario {
-    
-    private long id;
+
+    private static int contador;
+    private int id;
     private String login, nomeLogin, senha;
-    private TipoUsuario tipo;
-    private static long auxId;
-    
+    private Enum tipoUsuario;
+
     public Usuario() {
-        id = auxId++;
+
+    }
+
+    public Usuario(String login, String nomeLogin, String senha, Enum tipoUsuario) {
+        contador++;
+        this.id = contador;
+        this.login = login;
+        this.nomeLogin = nomeLogin;
+        this.senha = senha;
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public static Usuario getInstance(String login, String nomeLogin, String senha, Enum tipoUsuario) {
+        if (login != null && nomeLogin != null && senha != null && tipoUsuario != null) {
+            return new Usuario(login, nomeLogin, senha, tipoUsuario);
+        }
+
+        return null;
+    }
+    
+    Usuario(Usuario u) {
+        this.id = u.id;
+        this.login = u.login;
+        this.nomeLogin = u.nomeLogin;
+        this.senha = senha;
+        this.tipoUsuario = u.tipoUsuario;
+    }
+
+    boolean verificaruUsuarioPorNomeLogin(String nome) {
+        if (nome.equals(this.nomeLogin)) {
+            return true;
+        }
+        return false;
+    }
+
+    boolean verificaruSenhaDoUsuario(String senha) {
+        if (senha.equals(this.senha)) {
+            return true;
+        }
+        return false;
     }
 
     public long getId() {
         return id;
+    }
+
+    public static int getContador() {
+        return contador;
     }
 
     public String getLogin() {
@@ -39,12 +82,12 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public TipoUsuario getTipo() {
-        return tipo;
+    public Enum getTipo() {
+        return tipoUsuario;
     }
 
     public void setTipo(TipoUsuario tipo) {
-        this.tipo = tipo;
+        this.tipoUsuario = tipo;
     }
-    
+
 }

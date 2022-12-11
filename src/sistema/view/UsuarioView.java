@@ -62,9 +62,12 @@ public class UsuarioView {
     }
 
     public void listar(List<Usuario> us) {
-        System.out.printf("%7s%16s%16s%7s", "ID", "Nome", "NomeLogin", "Senha");
+        System.out.printf("%7s%16s%16s%7s%8s", "ID", "Nome", "NomeLogin",
+                "Senha", "Tipo");
+        System.out.println("\n");
         for (Usuario u : us) {
-            System.out.printf("%7s%16s%16s%7s", u.getId(), u.getNome(), u.getLogin(), u.getSenha() + "\n");
+            System.out.printf("%7s%16s%16s%7s", u.getId(), u.getNome(),
+                    u.getLogin(), u.getSenha(), u.getTipo() + "\n");
         }
         System.out.println("\n");
     }
@@ -87,12 +90,10 @@ public class UsuarioView {
             try {
                 System.out.println("Insira o ID: ");
                 pID = sc.nextLong();
-                break;
+                return pID;
             } catch (Exception e) {
                 System.out.println("Favor inserir um valor válido!");
             }
         }
-
-        return pID;
     }
 }

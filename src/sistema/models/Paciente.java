@@ -44,6 +44,20 @@ public class Paciente implements Cloneable {
         return new Paciente(nome, nomeMae, sexo, endereco.clone());
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Usuario) {
+            Paciente p = (Paciente) obj;
+            if (numCNS == p.numCNS) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
+
     public Anamnese[] getVetAnamnese() {
         return vetAnamnese;
     }
@@ -94,5 +108,9 @@ public class Paciente implements Cloneable {
 
     public long getNumCNS() {
         return numCNS;
+    }
+
+    public void setnumCNS(long numCNS) {
+        this.numCNS = numCNS;
     }
 }

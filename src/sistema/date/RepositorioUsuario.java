@@ -9,7 +9,6 @@ import sistema.models.Usuario;
 public class RepositorioUsuario implements IRepositorioUsuario {
     
     private List<Usuario> usuarios;
-    private long idRepo;
 
     public RepositorioUsuario() {
         usuarios = new ArrayList<Usuario>();

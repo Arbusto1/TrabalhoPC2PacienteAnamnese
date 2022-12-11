@@ -1,6 +1,6 @@
 package sistema.models;
 
-public class Anamnese {
+public class Anamnese implements Cloneable {
     
     protected long id;
     protected String motivo, relato, diagnostico;

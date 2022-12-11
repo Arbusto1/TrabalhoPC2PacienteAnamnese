@@ -27,10 +27,24 @@ public class Usuario implements Cloneable {
 
         return null;
     }
-    
+
     @Override
     public Usuario clone() throws CloneNotSupportedException {
         return (Usuario) super.clone();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Usuario) {
+            Usuario u = (Usuario) obj;
+            if (id == u.id) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     public Usuario(Usuario u) {

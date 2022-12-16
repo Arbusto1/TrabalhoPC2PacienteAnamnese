@@ -1,24 +1,19 @@
 package sistema.view;
 
-import java.util.List;
-import java.util.Scanner;
+import sistema.models.Deficiencia;
 import sistema.models.Endereco;
 import sistema.models.Paciente;
+import sistema.models.PacienteComDeficiencia;
 import sistema.models.Sexo;
 
-public class PacienteView {
+public class PacienteCDView extends PacienteView {
 
-    protected Scanner sc;
-
-    public PacienteView() {
-        sc = new Scanner(System.in);
-    }
-
+    @Override
     public Paciente lerPaciente() {
         System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*="
                 + "CADASTRO DE PACIENTE*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
 
-        Paciente p = new Paciente();
+        PacienteComDeficiencia pd = new PacienteComDeficiencia();
         Endereco e = new Endereco();
         for (;;) {
 
@@ -26,9 +21,9 @@ public class PacienteView {
 
                 System.out.println("");
                 System.out.println("Qual o nome do Paciente? ");
-                p.setNome(sc.nextLine());
+                pd.setNome(sc.nextLine());
                 System.out.println("Qual o nome da mãe? ");
-                p.setNomeMae(sc.nextLine());
+                pd.setNomeMae(sc.nextLine());
 
                 System.out.println("Qual o sexo do paciente? (Digite 1 para MASCULINO 2 para"
                         + " FEMININO e 3 para INTERSEXO)");
@@ -38,20 +33,47 @@ public class PacienteView {
                     sc.nextLine();
                     if (s == 1) {
 
-                        p.setSexo(Sexo.MASCULINO);
+                        pd.setSexo(Sexo.MASCULINO);
                         break;
                     } else if (s == 2) {
 
-                        p.setSexo(Sexo.FEMININO);
+                        pd.setSexo(Sexo.FEMININO);
                         break;
                     } else if (s == 3) {
 
-                        p.setSexo(Sexo.INTERSEXO);
+                        pd.setSexo(Sexo.INTERSEXO);
                         break;
                     } else {
                         System.out.println("Insira um número válido!");
                     }
                 }
+
+                System.out.println("Qual a deficiência do paciente? (Digite 1"
+                        + " para MOTORA, 2 para MENTAL, 3 para VISUAL)");
+
+                for (;;) {
+
+                    int s = sc.nextInt();
+                    sc.nextLine();
+                    if (s == 1) {
+
+                        pd.setDeficiencia(Deficiencia.MOTORA);
+                        break;
+                    } else if (s == 2) {
+
+                        pd.setDeficiencia(Deficiencia.MENTAL);
+                        break;
+                    } else if (s == 3) {
+
+                        pd.setDeficiencia(Deficiencia.VISUAL);
+                        break;
+                    } else {
+                        System.out.println("Insira um número válido!");
+                    }
+                }
+
+                System.out.println("Qual foi seu fator complicador? ");
+                pd.setFatorComplicador(sc.nextLine());
 
                 System.out.println("Qual a cidade onde mora? ");
                 e.setCidade(sc.nextLine());
@@ -62,7 +84,7 @@ public class PacienteView {
                 System.out.println("Qual o número da residência?");
                 e.setNumero(sc.nextInt());
                 sc.nextLine();
-                p.setEndereco(e);
+                pd.setEndereco(e);
                 break;
 
             } catch (Exception ex) {
@@ -72,43 +94,6 @@ public class PacienteView {
             }
             break;
         }
-        return p;
-    }
-
-    public void listar(List<Paciente> pac) {
-        System.out.printf("%7s%16s%16s%%8s%16s%16s%16s%4s", "numCNS", "Nome",
-                "Nome da Mãe", "Sexo", "Cidade", "Bairro", "Rua",
-                "Número da residência");
-        System.out.println("\n");
-        for (Paciente p : pac) {
-            System.out.printf("%7s%16s%16s%%8s%16s%16s%16s%4s", p.getNumCNS(),
-                    p.getNome(), p.getNomeMae(), p.getSexo(),
-                    p.getEndereco().getCidade(), p.getEndereco().getBairro(),
-                    p.getEndereco().getRua(), p.getEndereco().getNumero() + "\n");
-        }
-        System.out.println("\n");
-    }
-
-    public void print(String mns) {
-        System.out.println(mns);
-    }
-
-    public Paciente alterar(Paciente p) {
-        Paciente pAlt = lerPaciente();
-        pAlt.setnumCNS(p.getNumCNS());
-        return pAlt;
-    }
-
-    public long pegaId() {
-        long id = 0;
-
-        for (;;) {
-            try {
-                System.out.println("Insira o ID: ");
-                id = sc.nextLong();
-                return id;
-            } catch (Exception e) {
-            }
-        }
+        return pd;
     }
 }

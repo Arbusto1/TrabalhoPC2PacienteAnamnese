@@ -5,15 +5,16 @@ import java.util.List;
 import sistema.date.exception.InserirPacienteException;
 import sistema.date.exception.PacienteNaoEncontradoException;
 import sistema.models.Paciente;
+import sistema.models.PacienteComDeficiencia;
 
 public class RepositorioPaciente implements IRepositorioPaciente {
-    
+
     private List<Paciente> pacientes;
-    
+
     public RepositorioPaciente() {
         pacientes = new ArrayList<Paciente>();
     }
-    
+
     @Override
     public void add(Paciente p) throws InserirPacienteException, IllegalArgumentException {
         if (p == null) {
@@ -22,7 +23,16 @@ public class RepositorioPaciente implements IRepositorioPaciente {
             throw new InserirPacienteException("Não foi possível inserir o paciente");
         }
     }
-    
+
+    @Override
+    public void add(PacienteComDeficiencia pd) throws InserirPacienteException, IllegalArgumentException {
+        if (pd == null) {
+            throw new IllegalArgumentException("Insira um argumento válido");
+        } else if (!pacientes.add(pd)) {
+            throw new InserirPacienteException("Não foi possível inserir o paciente");
+        }
+    }
+
     @Override
     public List<Paciente> listar() {
         List<Paciente> lPac = new ArrayList<Paciente>();
@@ -35,18 +45,18 @@ public class RepositorioPaciente implements IRepositorioPaciente {
         }
         return lPac;
     }
-    
+
     @Override
     public boolean excluir(long id) {
         for (int i = 0; i < pacientes.size(); i++) {
-            if (pacientes.get(i).getNumCNS()== id) {
+            if (pacientes.get(i).getNumCNS() == id) {
                 pacientes.remove(i);
                 return true;
             }
         }
         return false;
     }
-    
+
     @Override
     public void alterar(Paciente pAlt) throws PacienteNaoEncontradoException {
         for (int i = 0; i < pacientes.size(); i++) {
@@ -57,11 +67,11 @@ public class RepositorioPaciente implements IRepositorioPaciente {
         }
         throw new PacienteNaoEncontradoException("O paciente não foi encontrado");
     }
-    
+
     @Override
     public Paciente buscar(long id) {
         for (Paciente p : pacientes) {
-            if (p.getNumCNS()== id) {
+            if (p.getNumCNS() == id) {
                 return p;
             }
         }

@@ -5,20 +5,29 @@ import sistema.date.IRepositorioPaciente;
 import sistema.date.exception.InserirPacienteException;
 import sistema.date.exception.PacienteNaoEncontradoException;
 import sistema.models.Paciente;
+import sistema.view.PacienteCDView;
 import sistema.view.PacienteView;
 
 public class ControlePaciente {
-    
+
     private IRepositorioPaciente repoPaciente;
     private PacienteView viewPaciente;
-    
+    private PacienteCDView viewPacienteCD;
+
     public ControlePaciente(IRepositorioPaciente repo) {
         viewPaciente = new PacienteView();
+        viewPacienteCD = new PacienteCDView();
         repoPaciente = repo;
     }
-    
-    public void inserir() {
-        Paciente pCrud = viewPaciente.lerPaciente();
+
+    public void inserir(char c) {
+        Paciente pCrud;
+        if (c == 's') {
+            pCrud = viewPacienteCD.lerPaciente();
+        } else {
+            pCrud = viewPaciente.lerPaciente();
+        }
+
         try {
             repoPaciente.add(pCrud);
         } catch (InserirPacienteException e) {
@@ -27,7 +36,7 @@ public class ControlePaciente {
             System.out.println("Algum argumento inválido");
         }
     }
-    
+
     public void alterar() {
         System.out.println("*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*="
                 + "ALTERAR PACIENTE*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
@@ -47,11 +56,11 @@ public class ControlePaciente {
             }
         }
     }
-    
-        public void excluir() {
+
+    public void excluir() {
         List<Paciente> pacientes = repoPaciente.listar();
         viewPaciente.listar(pacientes);
-        
+
         long id = viewPaciente.pegaId();
         if (repoPaciente.excluir(id)) {
             System.out.println("Paciente excluido com sucesso!");
@@ -59,7 +68,7 @@ public class ControlePaciente {
             System.out.println("Não foi possível excluir o paciente");
         }
     }
-    
+
     public void listar() {
         List<Paciente> pacientes = repoPaciente.listar();
         viewPaciente.listar(pacientes);

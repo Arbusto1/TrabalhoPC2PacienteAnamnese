@@ -16,7 +16,7 @@ public class Paciente implements Cloneable {
         this.numCNS = idPac++;
     }
 
-    private Paciente(String nome, String nomeMae, Sexo sexo, Endereco endereco) {
+    protected Paciente(String nome, String nomeMae, Sexo sexo, Endereco endereco) {
         this();
         this.nome = nome;
         this.nomeMae = nomeMae;

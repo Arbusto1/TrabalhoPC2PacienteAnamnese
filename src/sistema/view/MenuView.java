@@ -12,9 +12,10 @@ public class MenuView {
                 + "MENU ATENDENTE *=*=*=*=*=*=*=*=*=*=*=*=*=*=*=*=");
         System.out.println("Digite 0 para sair");
         System.out.println("Digite 1 para CADASTRAR UM PACIENTE");
-        System.out.println("Digite 2 para ALTERAR UM PACIENTE");
-        System.out.println("Digite 3 para EXCLUIR UM PACIENTE");
-        System.out.println("Digite 4 para LISTAR OS PACIENTES");
+        System.out.println("Digite 2 para CADASTRAR UM PACIENTE COM DEFICIÊNCIA");
+        System.out.println("Digite 3 para ALTERAR UM PACIENTE");
+        System.out.println("Digite 4 para EXCLUIR UM PACIENTE");
+        System.out.println("Digite 5 para LISTAR OS PACIENTES");
 
         System.out.print("Digite aqui: ");
         return sc.nextInt();
